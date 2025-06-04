@@ -1,3 +1,4 @@
+const MD5 = require('crypto-js/md5');
 const UserModel = require("../models/UserModel")
 
 class UserController {
@@ -21,8 +22,11 @@ class UserController {
   }
 
   async create(request, response) {
-    const body = request.body;
-    await UserModel.create(body);
+    const { password, ...body } = request.body;
+
+    const passwordCrypto = MD5(password).toString();
+
+    await UserModel.create({ ...body, password: passwordCrypto });
 
     return response.status(201).json({
       message: "Usuário criado com sucesso"
