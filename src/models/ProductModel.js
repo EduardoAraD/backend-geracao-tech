@@ -27,7 +27,7 @@ ProductModel.init(
       defaultValue: false,
     },
     stock: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.FLOAT,
       defaultValue: 0,
     },
     description: {

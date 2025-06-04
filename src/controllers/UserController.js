@@ -6,9 +6,9 @@ class UserController {
   async getById(request, response) {
     const { id } = request.params
 
-    const user = UserModel.findOne({
-      where: { id: id },
-      attributes: ['firstname', 'username', 'email']
+    const user = await UserModel.findOne({
+      where: { id },
+      attributes: ['firstname', 'surname', 'email']
     })
     if(user === null) {
       return response.json({
@@ -22,22 +22,37 @@ class UserController {
   }
 
   async create(request, response) {
-    const { password, ...body } = request.body;
+    try {
+      const { password, confirmPassword, ...body } = request.body;
 
-    const passwordCrypto = MD5(password).toString();
+      if(password !== confirmPassword) {
+        return response.status(404).json({
+          message: "Senha e Confirmação de senha diferentes."
+        })
+      }
 
-    await UserModel.create({ ...body, password: passwordCrypto });
+      const passwordCrypto = MD5(password).toString();
 
-    return response.status(201).json({
-      message: "Usuário criado com sucesso"
-    })
+      await UserModel.create({ ...body, password: passwordCrypto });
+
+      return response.status(201).json({
+        message: "Usuário criado com sucesso"
+      })
+    } catch (err) {
+      return response.status(404).json({
+        message: err.message
+      })
+    }
   }
 
   async update(request, response) {
     const { id } = request.params
     const body = request.body;
 
-    await UserModel.update(body, { where: { id }})
+    await UserModel.update(body, {
+      attributes: ['email', 'firstname', 'surname'],
+      where: { id }
+    })
 
     return response.json({
       message: "Usuário alterado com sucesso"
