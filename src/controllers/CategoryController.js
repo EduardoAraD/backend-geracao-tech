@@ -13,7 +13,7 @@ class CategoryController {
 
     const where = useInMenuSearch ? { use_in_menu: true } : {}
 
-    const categorys = await CategoryModel.findAll({
+    const { rows, count } = await CategoryModel.findAndCountAll({
       attributes: fieldsSearch,
       where,
       limit: limitSearch,
@@ -21,7 +21,10 @@ class CategoryController {
     })
     
     return response.json({
-      categorys,
+      data: rows,
+      total: count,
+      limit: limitSearch,
+      page: pageSearch,
     })
   }
 

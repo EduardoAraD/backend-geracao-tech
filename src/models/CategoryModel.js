@@ -14,7 +14,7 @@ CategoryModel.init(
       allowNull: false,
     },
     use_in_menu: {
-      type: DataTypes.BOOLEAN(),
+      type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
   },
