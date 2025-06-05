@@ -20,6 +20,14 @@ UserModel.init(
     password: {
       type: DataTypes.STRING(45),
       allowNull: false,
+    },
+    cpf: {
+      type: DataTypes.STRING(11),
+      defaultValue: '',
+    },
+    phone: {
+      type: DataTypes.STRING(14),
+      defaultValue: '',
     }
   },
   {
