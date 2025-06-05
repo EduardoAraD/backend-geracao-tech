@@ -14,8 +14,8 @@ const PrivateRoutes = express.Router();
 PrivateRoutes.use(validateToken);
 
 PrivateRoutes.use(UserRoutes);
-PrivateRoutes.use(ProductRoutes);
 PrivateRoutes.use(CategoryRoutes);
+PrivateRoutes.use(ProductRoutes);
 PrivateRoutes.use(AddressRoutes);
 PrivateRoutes.use(PaymentRoutes);
 PrivateRoutes.use(PurchaseRoutes);
