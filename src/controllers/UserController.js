@@ -8,7 +8,6 @@ class UserController {
 
     const user = await UserModel.findOne({
       where: { id },
-      attributes: ['firstname', 'surname', 'email']
     })
     if(user === null) {
       return response.json({
@@ -50,7 +49,6 @@ class UserController {
     const body = request.body;
 
     await UserModel.update(body, {
-      attributes: ['email', 'firstname', 'surname'],
       where: { id }
     })
 
