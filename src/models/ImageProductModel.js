@@ -27,6 +27,7 @@ ImageProductModel.init(
   },
   {
     tableName: 'images',
+    timestamps: false,
     sequelize: connection,
   }
 )

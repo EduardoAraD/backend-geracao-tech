@@ -29,6 +29,7 @@ CategorysAndProducts.init(
   },
   {
     tableName: 'categ_prod',
+    timestamps: false,
     sequelize: connection,
   }
 )

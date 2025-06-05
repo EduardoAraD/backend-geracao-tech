@@ -2,9 +2,14 @@ const { Model, DataTypes } = require("sequelize");
 const connection = require("../config/connection");
 
 class ProductModel extends Model {
-  static associate ({ ImageProductModel, OptionsProductModel }) {
+  static associate ({ ImageProductModel, OptionsProductModel, CategoryModel, CategorysAndProducts }) {
     ProductModel.hasMany(ImageProductModel, { foreignKey: "product_id" });
     ProductModel.hasMany(OptionsProductModel, { foreignKey: "product_id" });
+    ProductModel.belongsToMany(CategoryModel, {
+      through: CategorysAndProducts,
+      foreignKey: 'product_id',
+      otherKey: 'category_id',
+    });
   }
 }
 
@@ -27,7 +32,7 @@ ProductModel.init(
       defaultValue: false,
     },
     stock: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.INTEGER,
       defaultValue: 0,
     },
     description: {
@@ -40,6 +45,22 @@ ProductModel.init(
     price_with_discount: {
       type: DataTypes.FLOAT,
       allowNull: false,
+    },
+    rate: {
+      type: DataTypes.INTEGER,
+      defaultValue: 3,
+    },
+    mark: {
+      type: DataTypes.STRING(20),
+      allowNull: false,
+    },
+    gender: {
+      type: DataTypes.ENUM(['male', 'female', 'unisex']),
+      defaultValue: 'unisex'
+    },
+    state: {
+      type: DataTypes.ENUM(['new', 'old']),
+      defaultValue: 'new',
     }
   },
   {

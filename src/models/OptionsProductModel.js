@@ -39,6 +39,7 @@ OptionsProductModel.init(
   },
   {
     tableName: 'options',
+    timestamps: false,
     sequelize: connection,
   }
 )
