@@ -31,25 +31,25 @@ class ProductController {
     const { rows, count } = await ProductModel.findAndCountAll({
       // attributes: fieldsSearch,
       include: [
-        { model: ImageProductModel, attributes: ['path', 'enabled'], },
+        { model: ImageProductModel, attributes: ['path'], },
         { model: OptionsProductModel, attributes: ["title", "shape", "radius","type", "values"] },
-        { model: CategoryModel, attributes: ['id'] },
+        { model: CategoryModel, attributes: ['id', 'name'] },
       ],
-      where: {
-        price: {
-          [Op.and]: { [Op.gte]: minRange, [Op.lte]: maxRange }
-        },
-        [Op.or]: [
-          {
-            name: { [Op.substring]: matchSearch }
-          },
-          {
-            description: { [Op.substring]: matchSearch }
-          }
-        ],
-        // [CategoryModel.id]: categoryIdsSearch,
-        // [OptionsProductModel.values]: { [Op.substring]: optionsSearch },
-      },
+      // where: {
+      //   price: {
+      //     [Op.and]: { [Op.gte]: minRange, [Op.lte]: maxRange }
+      //   },
+      //   [Op.or]: [
+      //     {
+      //       name: { [Op.substring]: matchSearch }
+      //     },
+      //     {
+      //       description: { [Op.substring]: matchSearch }
+      //     }
+      //   ],
+      //   // [CategoryModel.id]: categoryIdsSearch,
+      //   // [OptionsProductModel.values]: { [Op.substring]: optionsSearch },
+      // },
       limit: limitSearch,
       offset: pageSearch * limitSearch,
     })
@@ -71,8 +71,17 @@ class ProductController {
       createdAt: item.createdAt,
       updatedAt: item.updatedAt,
       images: item.ImageProductModels.map(img => img.path),
-      options: item.OptionsProductModels.map(opt => ({ ...opt, values: opt.values.split(',')})),
-      category_ids: item.CategoryModels.map(categ => categ.id)
+      options: item.OptionsProductModels.map(opt => ({
+        title: opt.title,
+        shape: opt.shape,
+        radius: opt.radius,
+        type: opt.type,
+        values: opt.values.replace("{", '').replace("}", '').split(",")
+      })),
+      categorys: item.CategoryModels.map(categ => ({
+        id: categ.id,
+        name: categ.name,
+      }))
     }))
 
     return response.json({
@@ -83,17 +92,96 @@ class ProductController {
     })
   }
 
-  async getById(request, response) {
-    const { id } = response.params;
+  async getProductHigh(request, response) {
+    const data = await ProductModel.findOne({
+      order: [
+        ['price_with_discount', 'ASC']
+      ],
+      include: [
+        { model: ImageProductModel, attributes: ['path'], },
+        { model: OptionsProductModel, attributes: ["title", "shape", "radius","type", "values"] },
+        { model: CategoryModel, attributes: ['id', 'name'] },
+      ],
+    })
 
-    const product = await ProductModel.findByPk(id, {
+    const product = {
+      id: data.id,
+      enabled: data.enabled,
+      name: data.name,
+      slug: data.slug,
+      use_in_menu: data.use_in_menu,
+      stock: data.stock,
+      description: data.description,
+      price: data.price,
+      price_with_discount: data.price_with_discount,
+      rate: data.rate,
+      mark: data.mark,
+      gender: data.gender,
+      state: data.state,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+      images: data.ImageProductModels.map(img => img.path),
+      options: data.OptionsProductModels.map(opt => ({
+        title: opt.title,
+        shape: opt.shape,
+        radius: opt.radius,
+        type: opt.type,
+        values: opt.values.replace("{", '').replace("}", '').split(",")
+      })),
+      categorys: data.CategoryModels.map(categ => ({
+        id: categ.id,
+        name: categ.name,
+      }))
+    }
+
+    return response.json({
+      product,
+    })
+  }
+
+  async getById(request, response) {
+    console.log(request.params);
+    const { id } = request.params;
+    console.log(id);
+
+    const data = await ProductModel.findByPk(id, {
       include: [ImageProductModel, OptionsProductModel, CategoryModel],
     })
 
-    if(product === null) {
+    if(data === null) {
       return response.json({
         message: "Produto não encontrado!"
       })
+    }
+
+    const product = {
+      id,
+      enabled: data.enabled,
+      name: data.name,
+      slug: data.slug,
+      use_in_menu: data.use_in_menu,
+      stock: data.stock,
+      description: data.description,
+      price: data.price,
+      price_with_discount: data.price_with_discount,
+      rate: data.rate,
+      mark: data.mark,
+      gender: data.gender,
+      state: data.state,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+      images: data.ImageProductModels.map(img => img.path),
+      options: data.OptionsProductModels.map(opt => ({
+        title: opt.title,
+        shape: opt.shape,
+        radius: opt.radius,
+        type: opt.type,
+        values: opt.values.replace("{", '').replace("}", '').split(",")
+      })),
+      categorys: data.CategoryModels.map(categ => ({
+        id: categ.id,
+        name: categ.name,
+      }))
     }
 
     return response.json({

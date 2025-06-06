@@ -47,7 +47,7 @@ ProductModel.init(
       allowNull: false,
     },
     rate: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       defaultValue: 3,
     },
     mark: {

@@ -8,7 +8,7 @@ class CategoryController {
     const limitResponse = limit === undefined ? 12 : Number(limit);
     const limitSearch = limitResponse < 0 ? 12: limitResponse;
     const pageSearch = (page === undefined ? 0 : Number(page));
-    const fieldsSearch = fields === undefined ? ['name', 'slug', 'use_in_menu'] : fields.split(',');
+    const fieldsSearch = fields === undefined ? ['id', 'name', 'slug', 'use_in_menu'] : fields.split(',');
     const useInMenuSearch = use_in_menu === undefined ? true : use_in_menu === '1' ? true : false;
 
     const where = useInMenuSearch ? { use_in_menu: true } : {}
