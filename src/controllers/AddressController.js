@@ -7,18 +7,19 @@ class AddressController {
   }
 
   async getAddressByUserId(request, response) {
-    const { id } = request.params;
+    try {
+      const { id } = request.params;
 
-    const address = await AddressModel.findAll({
-      include: UserModel,
-      where: {
-        [UserModel.id]: id
-      }
-    })
+      const address = await AddressModel.findOne({ where: { user_id: id }})
 
-    return response.json({
-      address
-    })
+      return response.json({
+        address
+      })
+    } catch (error) {
+      return response.status(400).json({
+        message: "Endereço não encontrado!"
+      })
+    }
   }
 
   async create(request, response) {

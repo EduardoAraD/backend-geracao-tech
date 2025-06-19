@@ -11,5 +11,6 @@ require('../models/PaymentModel');
 
 require('../models/CategorysAndProductsModel');
 require('../models/PurchaseModel');
+require('../models/PurchaseProductModel');
 
 connection.sync({ alter: true });

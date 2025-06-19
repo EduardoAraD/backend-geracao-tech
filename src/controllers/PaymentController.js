@@ -7,18 +7,19 @@ class PaymentController {
   }
 
   async getPaymentByUserId(request, response) {
-    const { id } = request.params;
+    try {
+      const { id } = request.params;
 
-    const payment = await PaymentModel.findOne({
-      include: UserModel,
-      where: {
-        [UserModel.id]: id
-      }
-    })
+      const payment = await PaymentModel.findOne({ where: { user_id: id } })
 
-    return response.json({
-      payment
-    })
+      return response.json({
+        payment
+      })
+    } catch (error) {
+      return response.status(400).json({
+        message: "Medoto de Pagamento não encontrado!"
+      })
+    }
   }
 
   async create(request, response) {

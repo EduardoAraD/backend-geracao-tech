@@ -13,9 +13,12 @@ class AuthController {
     if(data !== null) {
       const exp = Math.floor(Date.now() / 1000) + (60 * 60 * 24); // 24h// 'Tempo de Expiração';
       const user = {
+        id: data.id,
         firstname: data.firstname,
         surname: data.surname,
         email: data.email,
+        cpf: data.cpf,
+        phone: data.phone,
       }
       const token = jwt.sign({ user, exp }, process.env.APP_KEY_TOKEN);
 
