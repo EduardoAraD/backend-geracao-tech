@@ -12,7 +12,7 @@ class AddressController {
 
       const address = await AddressModel.findOne({ where: { user_id: id }})
 
-      return response.json({
+      return response.status(200).json({
         address
       })
     } catch (error) {
@@ -23,35 +23,53 @@ class AddressController {
   }
 
   async create(request, response) {
-    const body = request.body;
+    try {
+      const body = request.body;
 
-    const address = await AddressModel.create(body);
+      const address = await AddressModel.create(body);
 
-    return response.json({
-      message: "Endereço criado com sucesso",
-      address,
-    })
+      return response.status(201).json({
+        message: "Endereço criado com sucesso",
+        address,
+      })
+    } catch (error) {
+      return response.status(400).json({
+        message: err.message
+      })
+    }
   }
 
   async update(request, response) {
-    const { id } = request.params;
+    try {
+      const { id } = request.params;
 
-    const address = await AddressModel.update(body, { where: { id } })
+      const address = await AddressModel.update(body, { where: { id } })
 
-    return response.json({
-      message: "Endereço alterado com sucesso",
-      address,
-    })
+      return response.status(204).json({
+        message: "Endereço alterado com sucesso",
+        address,
+      })
+    } catch (error) {
+      return response.status(400).json({
+        message: err.message
+      })
+    }
   }
 
   async remove(request, response) {
-    const { id } = request.params;
+    try {
+      const { id } = request.params;
 
-    await AddressModel.destroy({ where: { id } });
+      await AddressModel.destroy({ where: { id } });
 
-    return response.json({
-      message: "Endereço deletado com sucesso",
-    })
+      return response.status(204).json({
+        message: "Endereço deletado com sucesso",
+      })
+    } catch (error) {
+      return response.status(400).json({
+        message: err.message
+      })
+    }
   }
 }
 

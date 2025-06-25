@@ -30,6 +30,11 @@ PurchaseModel.init(
       type: DataTypes.STRING(40),
       allowNull: false,
     },
+    status: {
+      type: DataTypes.ENUM(['cancel', 'finish', 'transit', 'packed']),
+      allowNull: false,
+      defaultValue: 'packed'
+    },
     name_completed: {
       type: DataTypes.STRING(45),
       allowNull: false,

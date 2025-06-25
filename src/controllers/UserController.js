@@ -10,7 +10,7 @@ class UserController {
       where: { id },
     })
     if(user === null) {
-      return response.json({
+      return response.status(404).json({
         message: "Usuário não encontrado!"
       })
     }
@@ -25,7 +25,7 @@ class UserController {
       const { password, confirmPassword, ...body } = request.body;
 
       if(password !== confirmPassword) {
-        return response.status(404).json({
+        return response.status(400).json({
           message: "Senha e Confirmação de senha diferentes."
         })
       }
@@ -38,33 +38,46 @@ class UserController {
         message: "Usuário criado com sucesso"
       })
     } catch (err) {
-      return response.status(404).json({
+      return response.status(400).json({
         message: err.message
       })
     }
   }
 
   async update(request, response) {
-    const { id } = request.params
-    const body = request.body;
+    try {
+      const { id } = request.params
+      const body = request.body;
 
-    await UserModel.update(body, {
-      where: { id }
-    })
+      await UserModel.update(body, {
+        where: { id }
+      })
 
-    return response.json({
-      message: "Usuário alterado com sucesso"
-    })
+      return response.status(204).json({
+        message: "Usuário alterado com sucesso"
+      })
+    } catch (error) {
+      return response.status(400).json({
+        message: err.message
+      })
+    }
+    
   }
 
   async remove(request, response) {
-    const { id } = request.params;
+    try {
+      const { id } = request.params;
 
-    await UserModel.destroy({ where: { id }});
+      await UserModel.destroy({ where: { id }});
 
-    return response.json({
-      message: "Usuário removido com sucesso"
-    })
+      return response.status(204).json({
+        message: "Usuário removido com sucesso"
+      })
+    } catch (error) {
+      return response.status(400).json({
+        message: err.message
+      })
+    }
   }
 }
 

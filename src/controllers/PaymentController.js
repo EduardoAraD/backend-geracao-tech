@@ -12,7 +12,7 @@ class PaymentController {
 
       const payment = await PaymentModel.findOne({ where: { user_id: id } })
 
-      return response.json({
+      return response.status(200).json({
         payment
       })
     } catch (error) {
@@ -23,35 +23,53 @@ class PaymentController {
   }
 
   async create(request, response) {
-    const body = request.body;
+    try {
+      const body = request.body;
 
-    const payment = await PaymentModel.create(body);
+      const payment = await PaymentModel.create(body);
 
-    return response.json({
-      message: "Metodo de Pagamento criado com sucesso",
-      payment,
-    })
+      return response.status(201).json({
+        message: "Metodo de Pagamento criado com sucesso",
+        payment,
+      })
+    } catch (error) {
+      return response.status(400).json({
+        message: err.message
+      })
+    }
   }
 
   async update(request, response) {
-    const { id } = request.params;
+    try {
+      const { id } = request.params;
 
-    const payment = await PaymentModel.update(body, { where: { id } })
+      const payment = await PaymentModel.update(body, { where: { id } })
 
-    return response.json({
-      message: "Metodo de Pagamento alterado com sucesso",
-      payment,
-    })
+      return response.status(204).json({
+        message: "Metodo de Pagamento alterado com sucesso",
+        payment,
+      })
+    } catch (error) {
+      return response.status(400).json({
+        message: err.message
+      })
+    }
   }
 
   async remove(request, response) {
-    const { id } = request.params;
+    try {
+      const { id } = request.params;
 
-    await PaymentModel.destroy({ where: { id } });
+      await PaymentModel.destroy({ where: { id } });
 
-    return response.json({
-      message: "Metodo de Pagamento deletado com sucesso",
-    })
+      return response.status(204).json({
+        message: "Metodo de Pagamento deletado com sucesso",
+      })
+    } catch (error) {
+      return response.status(400).json({
+        message: err.message
+      })
+    }
   }
 }
 

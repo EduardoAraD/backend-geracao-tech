@@ -7,7 +7,9 @@ function validateToken(request, response, next) {
   if(tokenString) {
     const isValidateToken = tokenString.includes('Bearer ');
     if(!isValidateToken) {
-      return response.status(403).send('Não Autorizado');
+      return response.status(401).json({
+        message: "Não Autorizado."
+      })
     }
     const token = tokenString.split(' ')[1];
 
@@ -16,11 +18,15 @@ function validateToken(request, response, next) {
 
       return next();
     } catch (error) {
-      return response.status(403).send('Não Autorizado');
+      return response.status(401).json({
+        message: "Não Autorizado."
+      })
     }
   }
 
-  return response.status(403).send('Não Autorizado');
+  return response.status(401).json({
+    message: "Não Autorizado."
+  })
 }
 
 module.exports = validateToken;
