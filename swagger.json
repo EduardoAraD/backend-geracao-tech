@@ -1,0 +1,1583 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Api Digital Store - Geracao Tech",
+    "version": "1.0",
+    "description": "Projeto final do Projeto Geração Tech feito por Eduardo Araujo"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/v1"
+    }
+  ],
+  "paths": {
+    "/user": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create new user",
+        "parameters": [
+          {
+            "name": "firstname",
+            "in": "formData",
+            "description": "First name of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "surname",
+            "in": "formData",
+            "description": "Last name of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Email of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "Password of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "confirmPassword",
+            "in": "formData",
+            "description": "Confirm password of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cpf",
+            "in": "formData",
+            "description": "CPF of user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "phone",
+            "in": "formData",
+            "description": "Phone of user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "message of create user."
+          },
+          "400": {
+            "description": "error payload."
+          }
+        }
+      }
+    },
+    "/user/{userId}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user by id",
+        "responses": {
+          "200": {
+            "description": "Get user."
+          },
+          "404": {
+            "description": "user not found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "summary": "Update user by id",
+        "parameters": [
+          {
+            "name": "firstname",
+            "in": "formData",
+            "description": "First name of user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "surname",
+            "in": "formData",
+            "description": "Last name of user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Email of user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "Password of user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "confirmPassword",
+            "in": "formData",
+            "description": "Confirm password of user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cpf",
+            "in": "formData",
+            "description": "CPF of user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "phone",
+            "in": "formData",
+            "description": "Phone of user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "message of update user."
+          },
+          "400": {
+            "description": "error payload."
+          },
+          "403": {
+            "description": "Unauthorized."
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete user by id",
+        "responses": {
+          "204": {
+            "description": "message of delete user"
+          },
+          "400": {
+            "description": "error payload"
+          },
+          "403": {
+            "description": "Unauthorized."
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "description": "ID of user to use",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/user/token": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Get token for user",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Email of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "Password of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "get token"
+          },
+          "400": {
+            "description": "error payload"
+          }
+        }
+      }
+    },
+    "/product": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "Get list of products",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "number of products for page",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page of search",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "attributes of products for search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "match",
+            "in": "query",
+            "description": "search products",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page of search",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "category_ids",
+            "in": "query",
+            "description": "list of categoryids",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "price_range",
+            "in": "query",
+            "description": "range of prices of products",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "option",
+            "in": "query",
+            "description": "values option of product",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of products."
+          },
+          "400": {
+            "description": "error payload."
+          }
+        }
+      },
+      "post": {
+        "tags": ["Products"],
+        "summary": "Create new product",
+        "parameters": [
+          {
+            "name": "enabled",
+            "in": "formData",
+            "description": "enabled of system",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "name",
+            "in": "formData",
+            "description": "name of product",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "slug",
+            "in": "formData",
+            "description": "slug of product",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "use_in_menu",
+            "in": "formData",
+            "description": "use product in menu",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "stock",
+            "in": "formData",
+            "description": "stock of product",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "description": "description of product",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "price",
+            "in": "formData",
+            "description": "price of product",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "price_with_discount",
+            "in": "formData",
+            "description": "price with discount of product",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "rate",
+            "in": "formData",
+            "description": "rate of product",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "mark",
+            "in": "formData",
+            "description": "mark of product",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "gender",
+            "in": "formData",
+            "description": "gender of product",
+            "required": false,
+            "schema": {
+              "type": "male | female | unisex"
+            }
+          },
+          {
+            "name": "state",
+            "in": "formData",
+            "description": "name of product",
+            "required": false,
+            "schema": {
+              "type": "new | old"
+            }
+          },
+          {
+            "name": "images",
+            "in": "formData",
+            "description": "images of product",
+            "required": true,
+            "schema": {
+              "type": "array<string>"
+            }
+          },
+          {
+            "name": "options",
+            "in": "formData",
+            "description": "name of product",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": [
+                {
+                  "name": "title",
+                  "required": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "name": "shape",
+                  "required": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "name": "radius",
+                  "required": true,
+                  "schema": {
+                    "type": "number"
+                  }
+                },
+                {
+                  "name": "type",
+                  "required": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "name": "values",
+                  "in": "formData",
+                  "description": "name of product",
+                  "required": true,
+                  "schema": {
+                    "type": "array",
+                    "items": "string"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "message of create product."
+          },
+          "400": {
+            "description": "error payload."
+          },
+          "403": {
+            "description": "Unauthorized."
+          }
+        }
+      }
+    },
+    "/productHigh": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "Get products high",
+        "responses": {
+          "200": {
+            "description": "A product high."
+          },
+          "400": {
+            "description": "error payload."
+          }
+        }
+      }
+    },
+    "/product/{productId}": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "Get product by id",
+        "responses": {
+          "200": {
+            "description": "Get product."
+          },
+          "400": {
+            "description": "error payload."
+          },
+          "404": {
+            "description": "product not found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Products"],
+        "summary": "Update product",
+        "parameters": [
+          {
+            "name": "enabled",
+            "in": "formData",
+            "description": "enabled of system",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "name",
+            "in": "formData",
+            "description": "name of product",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "slug",
+            "in": "formData",
+            "description": "slug of product",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "use_in_menu",
+            "in": "formData",
+            "description": "use product in menu",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "stock",
+            "in": "formData",
+            "description": "stock of product",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "description": "description of product",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "price",
+            "in": "formData",
+            "description": "price of product",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "price_with_discount",
+            "in": "formData",
+            "description": "price with discount of product",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "rate",
+            "in": "formData",
+            "description": "rate of product",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "mark",
+            "in": "formData",
+            "description": "mark of product",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "gender",
+            "in": "formData",
+            "description": "gender of product",
+            "required": false,
+            "schema": {
+              "type": "male | female | unisex"
+            }
+          },
+          {
+            "name": "state",
+            "in": "formData",
+            "description": "name of product",
+            "required": false,
+            "schema": {
+              "type": "new | old"
+            }
+          },
+          {
+            "name": "images",
+            "in": "formData",
+            "description": "images of product",
+            "required": true,
+            "schema": {
+              "type": "array<string>"
+            }
+          },
+          {
+            "name": "options",
+            "in": "formData",
+            "description": "name of product",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": [
+                {
+                  "name": "title",
+                  "required": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "name": "shape",
+                  "required": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "name": "radius",
+                  "required": true,
+                  "schema": {
+                    "type": "number"
+                  }
+                },
+                {
+                  "name": "type",
+                  "required": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "name": "values",
+                  "in": "formData",
+                  "description": "name of product",
+                  "required": true,
+                  "schema": {
+                    "type": "array",
+                    "items": "string"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "message of update product."
+          },
+          "400": {
+            "description": "error payload."
+          },
+          "403": {
+            "description": "Unauthorized."
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Products"],
+        "summary": "Delete product by id",
+        "responses": {
+          "204": {
+            "description": "message of delete product."
+          },
+          "400": {
+            "description": "error payload."
+          },
+          "403": {
+            "description": "Unauthorized."
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "productId",
+          "in": "path",
+          "description": "ID of product to use",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/category": {
+      "get": {
+        "tags": ["Categorys"],
+        "summary": "Get list of categories",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "number of categories for page",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page of search",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "attributes of category for search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page of search",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "use_in_menu",
+            "in": "query",
+            "description": "use_in_menu of search categories",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of categories."
+          },
+          "400": {
+            "description": "error payload."
+          }
+        }
+      },
+      "post": {
+        "tags": ["Categorys"],
+        "summary": "Create new category",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "formData",
+            "description": "name of category",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "slug",
+            "in": "formData",
+            "description": "slug of category",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "use_in_menu",
+            "in": "formData",
+            "description": "name of category",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "message of create category."
+          },
+          "400": {
+            "description": "error payload."
+          },
+          "403": {
+            "description": "Unauthorized."
+          }
+        }
+      }
+    },
+    "/category/{categoryId}": {
+      "get": {
+        "tags": ["Categorys"],
+        "summary": "Get category by id",
+        "responses": {
+          "200": {
+            "description": "Get categoy."
+          },
+          "400": {
+            "description": "error payload."
+          },
+          "404": {
+            "description": "category not found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Categorys"],
+        "summary": "Update category by id",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "formData",
+            "description": "name of category",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "slug",
+            "in": "formData",
+            "description": "slug of category",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "use_in_menu",
+            "in": "formData",
+            "description": "name of category",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "message of update category."
+          },
+          "400": {
+            "description": "error payload."
+          },
+          "403": {
+            "description": "Unauthorized."
+          },
+          "404": {
+            "description": "category not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Categorys"],
+        "summary": "Delete category by id",
+        "responses": {
+          "204": {
+            "description": "message of delete category."
+          },
+          "400": {
+            "description": "error payload."
+          },
+          "403": {
+            "description": "Unauthorized."
+          },
+          "404": {
+            "description": "category not found"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "categoryId",
+          "in": "path",
+          "description": "ID of category to use",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/address/user/{userId}": {
+      "get": {
+        "tags": ["Address"],
+        "summary": "Get address of user by userId",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of user to use",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get address of user by userId."
+          },
+          "400": {
+            "description": "error payload."
+          },
+          "403": {
+            "description": "Unauthorized."
+          }
+        }
+      }
+    },
+    "/address": {
+      "post": {
+        "tags": ["Address"],
+        "summary": "Create new address for user",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "formData",
+            "description": "id of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "address",
+            "in": "formData",
+            "description": "address of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "district",
+            "in": "formData",
+            "description": "district of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "city",
+            "in": "formData",
+            "description": "city of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cep",
+            "in": "formData",
+            "description": "cep of address of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "complement",
+            "in": "formData",
+            "description": "complement of address",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "message of create address."
+          },
+          "400": {
+            "description": "error payload."
+          },
+          "403": {
+            "description": "Unauthorized."
+          }
+        }
+      }
+    },
+    "/address/{addressId}": {
+      "put": {
+        "tags": ["Address"],
+        "summary": "Update address by id",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "formData",
+            "description": "id of user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "address",
+            "in": "formData",
+            "description": "address of user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "district",
+            "in": "formData",
+            "description": "district of user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "city",
+            "in": "formData",
+            "description": "city of user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cep",
+            "in": "formData",
+            "description": "cep of address of user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "complement",
+            "in": "formData",
+            "description": "complement of address",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "message of update address."
+          },
+          "400": {
+            "description": "error payload."
+          },
+          "403": {
+            "description": "Unauthorized."
+          },
+          "404": {
+            "description": "address not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Address"],
+        "summary": "Delete address by id",
+        "responses": {
+          "204": {
+            "description": "message of delete address."
+          },
+          "400": {
+            "description": "error payload."
+          },
+          "403": {
+            "description": "Unauthorized."
+          },
+          "404": {
+            "description": "address not found"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "addressId",
+          "in": "path",
+          "description": "ID of address to use",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/payment/user/{userId}": {
+      "get": {
+        "tags": ["Payment"],
+        "summary": "Get payment of user by userId",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of user to use",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get payment of user by userId."
+          },
+          "400": {
+            "description": "error payload."
+          },
+          "403": {
+            "description": "Unauthorized."
+          }
+        }
+      }
+    },
+    "/payment": {
+      "post": {
+        "tags": ["Payment"],
+        "summary": "Create new payment for user",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "formData",
+            "description": "id of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "formData",
+            "description": "name of card payment",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "number",
+            "in": "formData",
+            "description": "number of card payment",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "validate_card",
+            "in": "formData",
+            "description": "date validate of card payment",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cvv",
+            "in": "formData",
+            "description": "cvv of card payment",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "message of create payment."
+          },
+          "400": {
+            "description": "error payload."
+          },
+          "403": {
+            "description": "Unauthorized."
+          }
+        }
+      }
+    },
+    "/payment/{paymentId}": {
+      "put": {
+        "tags": ["Payment"],
+        "summary": "Update payment by id",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "formData",
+            "description": "id of user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "formData",
+            "description": "name of card payment",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "number",
+            "in": "formData",
+            "description": "number of card payment",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "validate_card",
+            "in": "formData",
+            "description": "date validate of card payment",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cvv",
+            "in": "formData",
+            "description": "cvv of card payment",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "message of update payment."
+          },
+          "400": {
+            "description": "error payload."
+          },
+          "403": {
+            "description": "Unauthorized."
+          },
+          "404": {
+            "description": "payment not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Payment"],
+        "summary": "Delete payment by id",
+        "responses": {
+          "204": {
+            "description": "message of update payment."
+          },
+          "400": {
+            "description": "error payload."
+          },
+          "403": {
+            "description": "Unauthorized."
+          },
+          "404": {
+            "description": "payment not found"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "paymentId",
+          "in": "path",
+          "description": "ID of payment to use",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/purchase": {
+      "post": {
+        "tags": ["Purchase"],
+        "summary": "Create new purchase",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "formData",
+            "description": "id of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ref",
+            "in": "formData",
+            "description": "ref of purchase",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "formData",
+            "description": "name of card payment",
+            "required": true,
+            "schema": {
+              "type": "cancel | finish | transit | packed"
+            }
+          },
+          {
+            "name": "name_completed",
+            "in": "formData",
+            "description": "name completed of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "email of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cpf",
+            "in": "formData",
+            "description": "cpf of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "phone",
+            "in": "formData",
+            "description": "phone of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "address",
+            "in": "formData",
+            "description": "address of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "district",
+            "in": "formData",
+            "description": "district of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "city",
+            "in": "formData",
+            "description": "city of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cep",
+            "in": "formData",
+            "description": "cep of address of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "complement",
+            "in": "formData",
+            "description": "complement of address",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type_payment",
+            "in": "formData",
+            "description": "cvv of card payment",
+            "required": true,
+            "schema": {
+              "type": "card | billet"
+            }
+          },
+          {
+            "name": "name_card",
+            "in": "formData",
+            "description": "name of card payment",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "number_card",
+            "in": "formData",
+            "description": "number of card payment",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "validate_card",
+            "in": "formData",
+            "description": "date validate of card payment",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cvv",
+            "in": "formData",
+            "description": "cvv of card payment",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "message of create purchase."
+          },
+          "400": {
+            "description": "error payload."
+          },
+          "403": {
+            "description": "Unauthorized."
+          }
+        }
+      }
+    },
+    "/purchase/user/{userId}": {
+      "get": {
+        "tags": ["Purchase"],
+        "summary": "Get all purchases of user by userId",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of user to use",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get list of purchases of user by userId."
+          },
+          "400": {
+            "description": "error payload."
+          },
+          "403": {
+            "description": "Unauthorized."
+          }
+        }
+      }
+    },
+    "/purchase/ref/{ref}": {
+      "get": {
+        "tags": ["Purchase"],
+        "summary": "Get purchase by id",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "description": "ref of purchase to use",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get purchase by ref."
+          },
+          "400": {
+            "description": "error payload."
+          },
+          "403": {
+            "description": "Unauthorized."
+          },
+          "404": {
+            "description": "purchase not found"
+          }
+        }
+      }
+    }
+  }
+}

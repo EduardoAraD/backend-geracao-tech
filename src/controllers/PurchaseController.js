@@ -69,6 +69,12 @@ class PurchaseController {
         where: { ref }
       });
 
+      if(purchase === null) {
+        return response.status(404).json({
+          message: "Purchase not found!"
+        })
+      }
+
       return response.status(200).json({
         purchase: {
           id: purchase.id,

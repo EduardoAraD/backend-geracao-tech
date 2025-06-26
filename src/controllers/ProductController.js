@@ -160,7 +160,7 @@ class ProductController {
       })
 
       if(data === null) {
-        return response.json({
+        return response.status(404).json({
           message: "Produto não encontrado!"
         })
       }

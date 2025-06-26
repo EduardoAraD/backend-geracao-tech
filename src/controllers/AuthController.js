@@ -33,7 +33,7 @@ class AuthController {
       })
     } catch (error) {
       return response.status(400).json({
-        message: err.message
+        message: error.message
       })
     }
     
