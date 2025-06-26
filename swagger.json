@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000/v1"
+      "url": "https://backend-geracao-tech.onrender.com/v1"
     }
   ],
   "paths": {
