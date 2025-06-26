@@ -15,6 +15,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(PublicRoutes)
 app.use(PrivateRoutes)
 
-app.listen(process.env.PORT, process.env.HOST, () => {
-  console.log(`Servidor rodando em: http://${process.env.HOST}:${process.env.PORT}`)
+app.listen(process.env.PORT ?? 3000, () => {
+  console.log(`Servidor rodando em: http://${process.env.HOST}:${process.env.PORT ?? 3000}`)
 })
