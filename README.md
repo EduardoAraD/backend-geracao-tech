@@ -25,7 +25,7 @@ Pré-requisitos: npm
 
 ```bash
 # clonar repositório
-git clone https://github.com/EduardoAraD/portifolio.git
+git clone https://github.com/EduardoAraD/backend-geracao-tech.git
 
 # instalar dependências
 npm install
